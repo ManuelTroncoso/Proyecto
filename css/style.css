@@ -1,0 +1,8 @@
+/*Soluciona el error los margen del row en el modal.*/
+.modal-header{
+    margin-right: 0px !important;
+    margin-left: 0px !important; 
+}
+#sing-up{
+    background-color: silver;
+}
