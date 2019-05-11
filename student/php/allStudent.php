@@ -2,7 +2,7 @@
     $con = mysqli_connect('localhost', 'calcu', 'calcu', 'accounts') or die("La conexion no ha sido posible establecerla");
     //$db = mysqli_select_db($con, 'usuarios') or die("La conexion no se ha podido establecer");
     $con->query("set names utf8");
-    $consulta = $con->query( "select user, id from studentAccount");
+    $consulta = $con->query( "select user, id, language from studentAccount");
     if ($consulta->num_rows > 0){
         $salida = array();
         $salida =  $consulta->fetch_all(MYSQLI_ASSOC);

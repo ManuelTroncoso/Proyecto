@@ -50,7 +50,8 @@ function Entrar(){
     $("#frm-show").html(`<form action="php/db.php">
     <div id="input-error"></div>
     <p>Usuario</p><input type="text" name="user" id="">
-    <p>Contraseña</p><input type="password" name="pass" id=""> 
+    <p>Contraseña</p><input type="password" name="pass" id=""><br>
+    <label><input type="checkbox" name="student" id=""><span>Eres un alumno, indicanoslo aquí!</span></label>
     <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
     <button type="submit" class="btn btn-primary" id="ok">Entrar</button>
@@ -85,7 +86,15 @@ function RegistroAjax(){
         data: { usuario: $('[name="user"]').val(), pass:$('[name="pass"]').val(), email:$('[name="email"]').val() },
         success: function (datos) {
             if(datos == "true"){
-                $("#frm-show").html("Usuario registrado, compruebe su correo electronico");
+                $("#input-error").html("")
+                var inputs = document.getElementById('frm-show').getElementsByTagName('input');
+                value = true;
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].value = "";
+                };
+                $("#input-error").html(`<div class="alert alert-success">
+                <strong>Felicidades!!</strong>Usuario registrado con éxito
+                </div>`)
             }
             else{
                 $("#frm-show").html("Actualmente hay un error en el sistema porfavor intentelo de nuevo mas tarde");

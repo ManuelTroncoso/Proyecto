@@ -32,7 +32,8 @@ CREATE TABLE `teacherAccount` (
   `id` int(11) NOT NULL,
   `user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL
+  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL,
+  `sala` varchar(100) COLLATE utf8_spanish_ci NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -67,12 +68,14 @@ CREATE TABLE `studentAccount` (
   `teacherId` int(11) NOT NULL,
   `user` varchar(50) COLLATE utf8_spanish_ci NOT NULL,
   `password` varchar(15) COLLATE utf8_spanish_ci NOT NULL,
-  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL
+  `email` varchar(100) COLLATE utf8_spanish_ci NOT NULL, 
+  `sala` varchar(100) COLLATE utf8_spanish_ci NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 ALTER TABLE `studentAccount`
   ADD PRIMARY KEY (`id`),
   ADD FOREIGN KEY (`teacherId`) REFERENCES `teacherAccount`(`id`),
+  ADD FOREIGN KEY (`sala`) REFERENCES `teacherAccount`(`sala`),
   ADD UNIQUE KEY `user` (`user`);
 
 ALTER TABLE `studentAccount`

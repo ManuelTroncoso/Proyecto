@@ -1,9 +1,9 @@
 <?php
 
 $servidor = "localhost";
-$usuario= "root";
-$password = "";
-$base_datos = "appchat";
+$usuario= "calcu";
+$password = "calcu";
+$base_datos = "accounts";
 
 
 

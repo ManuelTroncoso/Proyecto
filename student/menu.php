@@ -1,3 +1,8 @@
+<?php
+session_start();
+$user =  $_SESSION[$name];
+
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -28,7 +33,7 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Perfil</a>
+                    <a class="nav-link" href="#" id="profile-student"><?php echo $user?></a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Notificaciones</a>

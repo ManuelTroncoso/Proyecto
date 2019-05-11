@@ -28,6 +28,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `chat` (
   `id` int(11) NOT NULL,
+  `sala` varchar(100) COLLATE utf8_spanish_ci NULL,
   `nombre` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `mensaje` varchar(255) COLLATE utf8_spanish2_ci NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -51,6 +52,7 @@ INSERT INTO `chat` (`id`, `nombre`, `mensaje`, `fecha`) VALUES
 -- Indices de la tabla `chat`
 --
 ALTER TABLE `chat`
+  ADD FOREIGN KEY (`idTeacher`) REFERENCES `teacherAccount`(`id`),
   ADD PRIMARY KEY (`id`);
 
 --

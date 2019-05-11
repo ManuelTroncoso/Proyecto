@@ -1,7 +1,13 @@
 <?php
 session_start();
-$user =  $_SESSION[$name];
-
+$user =  $_SESSION['name'];
+$sala = $_SESSION['sala'];
+$url = "";
+if($sala != ''){
+  $url = "../Chat/index.php";
+}else{
+  $url = "../Chat/addChat.php";
+} 
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -18,7 +24,10 @@ $user =  $_SESSION[$name];
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+    <script>
+      var sala = '<?php echo $sala;?>'
+      var user = '<?php echo $user;?>'
+    </script>
     <script src="menu.js"></script>
 </head>
 
@@ -33,16 +42,19 @@ $user =  $_SESSION[$name];
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> <?php echo $user?> </a>
+                    <a class="nav-link id" href="#" onclick="profileUser('<?php echo $user?>')" id="<?php echo $id?>"> <?php echo $user?> </a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#addModal">Añadir <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <a class="nav-link" href="#">Notificaciones</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Chat</a>
+                    <a class="nav-link" href="<?php echo $url?>">Chat</a>
+                </li> 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo "../cerrarSesion.php" ?>">Cerrar Sesión</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -65,10 +77,14 @@ $user =  $_SESSION[$name];
             <div class="modal-body">
                 <div id="frm-show">
                   <div id="input-error"></div>
-                    <p>Usuario</p><input type="text" name="user" id="">
+                    <p>Usuario</p><input type="text" name="user" id="<?php echo $id ?>">
                     <p>Contraseña</p><input type="password" name="pass" id=""> 
                     <p>Repetir contraseña</p><input type="password" name="repeatpass" id="">
                     <p>Email</p><input type="email" name="email" id="">
+                    <p>Lenguaje</p> <select name="language" id="">
+                                <option value="Spain">Español</option>
+                                <option value="English">Inglés</option>
+                    </select>
                 </div>
             </div>
             <div class="modal-footer">
@@ -78,7 +94,7 @@ $user =  $_SESSION[$name];
           </div>
         </div>
       </div>
-      
+      <div id="list-Teacher"></div>
 </body>
 
 </html>

@@ -2,15 +2,17 @@
     $usuario = $_REQUEST['usuario']; 
     $pass = $_REQUEST['pass'];
     $email = $_REQUEST['email'];
+    $language = $_REQUEST['language'];
+    $sala = $_REQUEST['sala'];
     $con = mysqli_connect('localhost', 'calcu', 'calcu', 'accounts') or die("La conexion no ha sido posible establecerla");
     //$db = mysqli_select_db($con, 'usuarios') or die("La conexion no se ha podido establecer");
     $con->query("set names utf8");
-    $consulta = $con->query( "insert into studentAccount (user, teacherId, password, email) values('$usuario', 1 ,'$pass', '$email') ;");
+    $consulta = $con->query( "insert into studentAccount (user, teacherId, password, email, language) values('$usuario', '$idTeacher' ,'$pass', '$email', '$language');");
     if($consulta){
-        echo"true";
+        echo "true";
     }
     else{
-        echo"false";
+        echo  "false";
     }
     $con->close();
 ?>

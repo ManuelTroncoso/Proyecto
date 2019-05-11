@@ -1,7 +1,8 @@
 <?php
 	include "db.php";
+	$sala = $_POST['sala'];
 	///consultamos a la base
-	$consulta = "SELECT * FROM chat ORDER BY id DESC";
+	$consulta = "SELECT * FROM chat WHERE sala = '$sala' ORDER BY id DESC ";
 	$ejecutar = $conexion->query($consulta); 
 	while($fila = $ejecutar->fetch_array()) : 
 ?>
