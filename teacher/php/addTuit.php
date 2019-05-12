@@ -1,5 +1,5 @@
 <?php
-$con = mysqli_connect('localhost', 'calcu', 'calcu', 'accounts') or die("La conexion no ha sido posible establecerla");
+$con = mysqli_connect('localhost', 'calcu', 'calcu', 'account') or die("La conexion no ha sido posible establecerla");
 $con->query("set names utf8");
 $name = $_REQUEST['nameUser'];
 $tuit = $_REQUEST['tuit'];

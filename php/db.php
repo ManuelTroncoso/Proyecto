@@ -2,7 +2,7 @@
     $usuario = $_REQUEST['user']; 
     $pass = $_REQUEST['pass'];
     $student = $_REQUEST['student'];
-    $con = mysqli_connect('localhost', 'calcu', 'calcu', 'accounts') or die("La conexion no ha sido posible establecerla");
+    $con = mysqli_connect('localhost', 'calcu', 'calcu', 'account') or die("La conexion no ha sido posible establecerla");
     //$db = mysqli_select_db($con, 'usuarios') or die("La conexion no se ha podido establecer");
     $con->query("set names utf8");
     if($student == "on"){

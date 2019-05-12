@@ -3,7 +3,7 @@
 $servidor = "localhost";
 $usuario= "calcu";
 $password = "calcu";
-$base_datos = "accounts";
+$base_datos = "account";
 
 
 

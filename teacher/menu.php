@@ -4,10 +4,25 @@ $user =  $_SESSION['name'];
 $sala = $_SESSION['sala'];
 $url = "";
 if($sala != ''){
+  CambiaSala($user);
   $url = "../Chat/index.php";
 }else{
+  CambiaSala($user);
   $url = "../Chat/addChat.php";
-} 
+}
+
+
+function CambiaSala($user){
+  $con = mysqli_connect('localhost', 'calcu', 'calcu', 'account') or die("La conexion no ha sido posible establecerla");
+  $con->query("set names utf8");
+  $consulta = $con->query( "select sala from teacherAccount where user = '$user'");
+  $salida = array();
+  $salida =  $consulta->fetch_all(MYSQLI_ASSOC);
+  $sala =json_encode($salida[0]['sala']);
+  $_SESSION['sala'] = substr(substr($sala, 1),0, strlen($sala) -2);
+  echo  $_SESSION['sala'];
+  $con->close();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">

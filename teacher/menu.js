@@ -41,7 +41,7 @@ function ShowUser() {
                     <div class="col-sm-2"><a href="#" onclick="profileUser('`+datos[i].user+ `')"  id="profile`+ datos[i].id + `">Ver perfil</a></div>
                     <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
                     <div class="col-sm-2"><p>`+ datos[i].sala+`</p></div>
-                    <div class="col-sm-2"><button id="`+ datos[i].id + `">Chatear!</button></div>
+                    <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Chatear!</button></div>
                     </div>`)
                 }
                     
@@ -69,7 +69,19 @@ function password() {
         return true;
     }
 }
+function ChangeChat(salachat){
+    console.log(user)
+    $.ajax({
+        url: 'php/changeChat.php',
+        method: "post",
+        data: { chat: salachat, nameUser : user },
+        success: function (datos) {
+            console.log(datos)
+        }
+    });
+    location.reload();
 
+}
 function RegistroAjax() {
     $.ajax({
         url: 'php/loginStudentdb.php',

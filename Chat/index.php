@@ -4,6 +4,7 @@ $user =  $_SESSION['name'];
 $sala = $_SESSION['sala'];
 include "db.php";
 
+echo $sala;
 ?>
 <!DOCTYPE html>
 <html>
