@@ -20,12 +20,12 @@ $(function () {
 
     });
 
-    $('#createChat').click(function(){
-        if($("#name-chat").val() != ""){
-            if($('#private').prop('checked')){
+    $('#createChat').click(function () {
+        if ($("#name-chat").val() != "") {
+            if ($('#private').prop('checked')) {
                 CreateChat($("#name-chat").val(), "1");
             }
-            else{
+            else {
                 CreateChat($("#name-chat").val(), "0");
 
             }
@@ -40,16 +40,16 @@ function ShowUser() {
         success: function (datos) {
             console.log(datos)
             for (i = 0; i < datos.length; i++) {
-                if (datos[i].user != user){
+                if (datos[i].user != user) {
                     $('#list-Teacher').append(`<div class="row student-data"> 
                     <div class="col-sm-2"></div>
-                    <div class="col-sm-2"><a href="#" onclick="profileUser('`+datos[i].user+ `')"  id="profile`+ datos[i].id + `">Ver perfil</a></div>
+                    <div class="col-sm-2"><a href="#" onclick="profileUser('`+ datos[i].user + `')"  id="profile` + datos[i].id + `">Ver perfil</a></div>
                     <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
-                    <div class="col-sm-2"><p>`+ datos[i].sala+`</p></div>
-                    <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Cambiar de sala</button></div>
+                    <div class="col-sm-2"><p>`+ datos[i].sala + `</p></div>
+                    <div class="col-sm-2"><button onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `">Cambiar de sala</button></div>
                     </div>`)
                 }
-                    
+
             }
         }
     });
@@ -74,12 +74,12 @@ function password() {
         return true;
     }
 }
-function ChangeChat(salachat){
+function ChangeChat(salachat) {
     console.log(user)
     $.ajax({
         url: 'php/changeChat.php',
         method: "post",
-        data: { chat: salachat, nameUser : user },
+        data: { chat: salachat, nameUser: user },
         success: function (datos) {
             console.log(datos)
         }
@@ -91,11 +91,11 @@ function RegistroAjax() {
     $.ajax({
         url: 'php/loginStudentdb.php',
         method: "post",
-        data: { usuario: $('[name="user"]').val(), pass: $('[name="pass"]').val(), email: $('[name="email"]').val(),  language: $('[name="language"]').val(), sala: sala  },
+        data: { usuario: $('[name="user"]').val(), idTeacher: id,pass: $('[name="pass"]').val(), email: $('[name="email"]').val(), language: $('[name="language"]').val(), sala: sala },
         success: function (datos) {
             console.log(datos)
             if (datos == "true") {
-                
+
                 $("#input-error").html("")
                 var inputs = document.getElementById('frm-show').getElementsByTagName('input');
                 value = true;
@@ -114,71 +114,102 @@ function RegistroAjax() {
     });
 }
 
-function profileUser(name){
+function profileUser(name) {
     $.ajax({
         url: 'php/allTeacher.php',
         method: "post",
-        data: { nameUser : name },
+        data: { nameUser: name },
         success: function (datos) {
-            if(datos == "Ready"){
-                location.href ="profile/profile.php";
+            if (datos == "Ready") {
+                location.href = "profile/profile.php";
             }
             // else{
             //     if(datos == "Private"){
-                    
+
             //     }
             // }
         }
     });
 }
-function CreateChat(nameSala, privateSala){
+function CreateChat(nameSala, privateSala) {
     $.ajax({
         url: '../Chat/addChat.php',
         method: "post",
-        data: { sala : nameSala, private: privateSala, userName: user },
+        data: { sala: nameSala, private: privateSala, userName: user },
         success: function (datos) {
             location.reload();
-            location.href ="../Chat/index.php";
+            location.href = "../Chat/index.php";
         }
     });
 }
-function Search(){
+function Search() {
 
     var sSearch = $("#search").val(),
-    sSearchNew = sSearch.trim();
-    
+        sSearchNew = sSearch.trim();
+
     $('#list-Teacher').html("");
-        if( sSearchNew != ""){
-            $("#filter-name").text(sSearchNew);
-            $("#filter-name").append('<button class="btn btn-link" onclick="clearLink()"> Eliminar Filtros</button>')
-            $.ajax({
-                url: 'php/search.php',
-                method: "post",
-                data: { nameUser : sSearchNew },
-                success: function (datos) {
-                    datos = JSON.parse(datos);
-                    for (i = 0; i < datos.length; i++) {
-                        if (datos[i].user != user){
-                            $('#list-Teacher').append(`<div class="row student-data"> 
+    if (sSearchNew != "") {
+        $("#filter-name").text(sSearchNew);
+        $("#filter-name").append('<button class="btn btn-link" onclick="clearLink()"> Eliminar Filtros</button>')
+        $.ajax({
+            url: 'php/search.php',
+            method: "post",
+            data: { nameUser: sSearchNew },
+            success: function (datos) {
+                datos = JSON.parse(datos);
+                for (i = 0; i < datos.length; i++) {
+                    if (datos[i].user != user) {
+                        $('#list-Teacher').append(`<div class="row student-data"> 
                             <div class="col-sm-2"></div>
-                            <div class="col-sm-2"><a href="#" onclick="profileUser('`+datos[i].user+ `')"  id="profile`+ datos[i].id + `">Ver perfil</a></div>
+                            <div class="col-sm-2"><a href="#" onclick="profileUser('`+ datos[i].user + `')"  id="profile` + datos[i].id + `">Ver perfil</a></div>
                             <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
-                            <div class="col-sm-2"><p>`+ datos[i].sala+`</p></div>
-                            <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Cambiar de sala</button></div>
+                            <div class="col-sm-2"><p>`+ datos[i].sala + `</p></div>
+                            <div class="col-sm-2"><button onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `">Cambiar de sala</button></div>
                             </div>`)
-                        }
-                            
                     }
+
                 }
-            });
-        }
-        else{
-            $("#filter-name").text("No hay ninguna busqueda actualmente");
-            ShowUser();
-        }
+            }
+        });
     }
-    function clearLink(){
-        $("#search").val("");
+    else {
         $("#filter-name").text("No hay ninguna busqueda actualmente");
         ShowUser();
     }
+}
+function clearLink() {
+    $("#search").val("");
+    $("#filter-name").text("No hay ninguna busqueda actualmente");
+    ShowUser();
+}
+function ShowStudentDelete(){
+    $("#delete-user").html("");
+    $.ajax({
+        url: 'php/loadStudent.php',
+        method: "post",
+        data: { user: user },
+        dataType: "json",
+        success: function (datos) {
+            for(i=0; i<datos.length;i++){
+                $("#delete-user").append(
+                    '<div class="col-sm-2"></div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
+                        `<div class="col-sm-4"><button onclick="DeleteStudent('`+datos[i].user+`')">Borrar</button></div>`)
+            }
+            //console.log(datos)
+        }
+    });
+    
+}
+function DeleteStudent(nameStudent){
+    $.ajax({
+        url: 'php/deleteStudent.php',
+        method: "post",
+        data: { name: nameStudent },
+        success: function (datos) {
+            if(datos==""){
+                ShowStudentDelete();
+            }
+        }
+    });
+    
+}

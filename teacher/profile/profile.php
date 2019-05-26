@@ -19,5 +19,6 @@ echo $user;
 <body>
     <input type="text" id="id-tuit">
     <button onclick="AddTuit('<?php echo $user; ?>')"> Añadir un tuit </button>
+    <div id="list-tuit"></div>
 </body>
 </html>

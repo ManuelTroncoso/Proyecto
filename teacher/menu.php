@@ -2,6 +2,7 @@
 session_start();
 $user =  $_SESSION['name'];
 $sala = $_SESSION['sala'];
+$id = $_SESSION['id'];
 $url = "";
 if($sala != ''){
   CambiaSala($user);
@@ -41,6 +42,7 @@ function CambiaSala($user){
     <script>
       var sala = '<?php echo $sala;?>'
       var user = '<?php echo $user;?>'
+      var id = '<?php echo $id;?>'
     </script>
     <script src="menu.js"></script>
 </head>
@@ -61,6 +63,9 @@ function CambiaSala($user){
                 <li class="nav-item active">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#addModal">Añadir <span class="sr-only">(current)</span></a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" class="btn btn-primary" data-toggle="modal" data-target="#deleteStudent" onclick="ShowStudentDelete()">Borrar usuario</a>
+                </li>               
                 <li class="nav-item">
                     <a class="nav-link" href="#" class="btn btn-primary" data-toggle="modal" data-target="#addChat">Crear sala</a>
                 </li>
@@ -126,6 +131,32 @@ function CambiaSala($user){
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
         <button type="button" class="btn btn-primary" id="createChat">Crear sala</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="deleteStudent" tabindex="-1" role="dialog" aria-labelledby="addChatLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addChatLabel">Nueva sala</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body row">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-6">
+          <p id="name-student">Nombre del alumno</p>
+        </div>
+        <div class="col-sm-4">
+          <p >Borrar</p>
+        </div>
+        <div class="row" id="delete-user"></div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>

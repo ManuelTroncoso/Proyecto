@@ -26,6 +26,7 @@
             $_SESSION['id'] = ($con->query( "select id from teacherAccount where user = '$usuario' and password = '$pass' ;"))->fetch_all(MYSQLI_ASSOC)[0]['id'];
             $_SESSION['sala'] = ($con->query( "select sala from teacherAccount where user = '$usuario' and password = '$pass' ;"))->fetch_all(MYSQLI_ASSOC)[0]['sala'];
             $_SESSION['name'] = $usuario;
+            
             header("Location:../teacher/menu.php");       
         }
         else{
