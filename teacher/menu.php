@@ -20,7 +20,6 @@ function CambiaSala($user){
   $salida =  $consulta->fetch_all(MYSQLI_ASSOC);
   $sala =json_encode($salida[0]['sala']);
   $_SESSION['sala'] = substr(substr($sala, 1),0, strlen($sala) -2);
-  echo  $_SESSION['sala'];
   $con->close();
 }
 ?>
@@ -62,25 +61,25 @@ function CambiaSala($user){
                 <li class="nav-item active">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#addModal">Añadir <span class="sr-only">(current)</span></a>
                 </li>
-                <!-- <li class="nav-item">
-                    <a class="nav-link" href="#">Notificaciones</a>
-                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $url?>">Chat</a>
+                    <a class="nav-link" href="#" class="btn btn-primary" data-toggle="modal" data-target="#addChat">Crear sala</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="<?php echo $url?>">Sala Nº: <?php echo $_SESSION['sala']; ?></a>
                 </li> 
                 <li class="nav-item">
                     <a class="nav-link" href="<?php echo "../cerrarSesion.php" ?>">Cerrar Sesión</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
+                <a class="btn btn-outline-success my-2 my-sm-0" role="button" onclick="Search()">Search</a>
             </form>
         </div>
     </nav>
 
     <!-- Modal -->
-<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+    <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header row">
@@ -109,7 +108,42 @@ function CambiaSala($user){
           </div>
         </div>
       </div>
-      <div id="list-Teacher"></div>
+
+<!-- Modal -->
+<div class="modal fade" id="addChat" tabindex="-1" role="dialog" aria-labelledby="addChatLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addChatLabel">Nueva sala</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Indique el nombre de la sala</p><input type="text" name="user" id="name-chat">
+        <br><br><label><input type="checkbox" name="chat" id="private"><span>Click si deseas que su sala sea privada</span></label>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary" id="createChat">Crear sala</button>
+      </div>
+    </div>
+  </div>
+</div>
+    <div id="list-Teacher-title">
+    <div class="row">
+    <div class="col-sm-2"></div>
+    <div class="col-sm-10"> <p>Filtros: <span id="filter-name"> No hay ninguna busqueda actualmente</span></p></div>    
+    </div>
+      <div class="row student-data">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-2"><p id="teacher-name">Ver perfil</p></div>
+        <div class="col-sm-3"><p id="teacher-name">Nombre de Usuario</p></div>
+        <div class="col-sm-2"><p> Sala que perteneces</p></div>
+        <div class="col-sm-2"></div>
+      </div>
+    </div>
+    <div id="list-Teacher"></div>
 </body>
 
 </html>

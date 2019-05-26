@@ -1,1 +1,1 @@
-user=[{"user":"Juan","id":"1","email":"manuelsnok@gmail.com","sala":"prueba1","photo":null,"born":"22-10-1998","tuit":"[{\"tuit1\":\"Hola\"},{\"tuit\":\"undefined\"},{\"tuit\":\"undefined\"},{\"tuit\":\"df\"}],{\"tuit\":\"dffdgdfsh\"}]"}]
+user=[{"user":"Juan","id":"1","email":"manuelsnok@gmail.com","sala":"1234","photo":null,"born":"22-10-1998","tuit":"[{\"tuit1\":\"Hola\"},{\"tuit\":\"undefined\"},{\"tuit\":\"undefined\"},{\"tuit\":\"df\"}],{\"tuit\":\"dffdgdfsh\"}]"}]

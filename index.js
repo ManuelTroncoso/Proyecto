@@ -9,7 +9,7 @@ $(function(){
         choose = "registro";
     })
     $("#ok").click(function(){
-        console.log("a")
+        //console.log("a")
         if(Comprueba()){
             if(choose == "entrar"){
                 ConexionAjax();

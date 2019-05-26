@@ -19,15 +19,20 @@ $(function () {
         //Sino mensaje de que rellene todos los datos
 
     });
+
+    $('#createChat').click(function(){
+        if($("#name-chat").val() != ""){
+            if($('#private').prop('checked')){
+                CreateChat($("#name-chat").val(), "1");
+            }
+            else{
+                CreateChat($("#name-chat").val(), "0");
+
+            }
+        }
+    })
 })
 function ShowUser() {
-    $('#list-Teacher').append(`<div class="row student-data">
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-2"><p id="teacher-name">Ver perfil</p></div>
-                    <div class="col-sm-3"><p id="teacher-name">Nombre de Usuario</p></div>
-                    <div class="col-sm-2"><p> Sala que perteneces</p></div>
-                    <div class="col-sm-2"></div>
-                    </div>`)
     $.ajax({
         url: 'php/allTeacher.php',
         method: "get",
@@ -41,7 +46,7 @@ function ShowUser() {
                     <div class="col-sm-2"><a href="#" onclick="profileUser('`+datos[i].user+ `')"  id="profile`+ datos[i].id + `">Ver perfil</a></div>
                     <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
                     <div class="col-sm-2"><p>`+ datos[i].sala+`</p></div>
-                    <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Chatear!</button></div>
+                    <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Cambiar de sala</button></div>
                     </div>`)
                 }
                     
@@ -80,7 +85,7 @@ function ChangeChat(salachat){
         }
     });
     location.reload();
-
+    //location.href = '../Chat/index.php';
 }
 function RegistroAjax() {
     $.ajax({
@@ -126,3 +131,54 @@ function profileUser(name){
         }
     });
 }
+function CreateChat(nameSala, privateSala){
+    $.ajax({
+        url: '../Chat/addChat.php',
+        method: "post",
+        data: { sala : nameSala, private: privateSala, userName: user },
+        success: function (datos) {
+            location.reload();
+            location.href ="../Chat/index.php";
+        }
+    });
+}
+function Search(){
+
+    var sSearch = $("#search").val(),
+    sSearchNew = sSearch.trim();
+    
+    $('#list-Teacher').html("");
+        if( sSearchNew != ""){
+            $("#filter-name").text(sSearchNew);
+            $("#filter-name").append('<button class="btn btn-link" onclick="clearLink()"> Eliminar Filtros</button>')
+            $.ajax({
+                url: 'php/search.php',
+                method: "post",
+                data: { nameUser : sSearchNew },
+                success: function (datos) {
+                    datos = JSON.parse(datos);
+                    for (i = 0; i < datos.length; i++) {
+                        if (datos[i].user != user){
+                            $('#list-Teacher').append(`<div class="row student-data"> 
+                            <div class="col-sm-2"></div>
+                            <div class="col-sm-2"><a href="#" onclick="profileUser('`+datos[i].user+ `')"  id="profile`+ datos[i].id + `">Ver perfil</a></div>
+                            <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
+                            <div class="col-sm-2"><p>`+ datos[i].sala+`</p></div>
+                            <div class="col-sm-2"><button onclick="ChangeChat('`+datos[i].sala+`')" id="`+ datos[i].id + `">Cambiar de sala</button></div>
+                            </div>`)
+                        }
+                            
+                    }
+                }
+            });
+        }
+        else{
+            $("#filter-name").text("No hay ninguna busqueda actualmente");
+            ShowUser();
+        }
+    }
+    function clearLink(){
+        $("#search").val("");
+        $("#filter-name").text("No hay ninguna busqueda actualmente");
+        ShowUser();
+    }
