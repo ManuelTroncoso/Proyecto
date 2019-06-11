@@ -1,17 +1,24 @@
 <?php
 session_start();
+clearstatcache ();
+$sala = "";
 $user =  $_SESSION['name'];
 $sala = $_SESSION['sala'];
 $id = $_SESSION['id'];
 $url = "";
-if($sala != ''){
+$modal  = "";
+
+
+if($sala != 'ul'){
   CambiaSala($user);
   $url = "../Chat/index.php";
 }else{
   CambiaSala($user);
-  $url = "../Chat/addChat.php";
+   $url = "#";
+   $modal = 'data-toggle="modal" data-target="#addChat"';
+  //$url = "../Chat/index.php";
 }
-
+$sala = $_SESSION['sala'];
 
 function CambiaSala($user){
   $con = mysqli_connect('localhost', 'calcu', 'calcu', 'account') or die("La conexion no ha sido posible establecerla");
@@ -70,10 +77,10 @@ function CambiaSala($user){
                     <a class="nav-link" href="#" class="btn btn-primary" data-toggle="modal" data-target="#addChat">Crear sala</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $url?>">Sala Nº: <?php echo $_SESSION['sala']; ?></a>
+                    <a class="nav-link" class="btn btn-primary" href="<?php echo $url?>" <?php echo $modal;?> > Sala Nº: <?php echo $_SESSION['sala']; ?></a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo "../cerrarSesion.php" ?>">Cerrar Sesión</a>
+                    <a class="nav-link"  href="<?php echo "../cerrarSesion.php" ?>">Cerrar Sesión</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -97,10 +104,10 @@ function CambiaSala($user){
                 <div id="frm-show">
                   <div id="input-error"></div>
                     <p>Usuario</p><input type="text" name="user" id="<?php echo $id ?>">
-                    <p>Contraseña</p><input type="password" name="pass" id=""> 
-                    <p>Repetir contraseña</p><input type="password" name="repeatpass" id="">
-                    <p>Email</p><input type="email" name="email" id="">
-                    <p>Lenguaje</p> <select name="language" id="">
+                    <p>Contraseña</p><input type="password" name="pass" id="pass"> 
+                    <p>Repetir contraseña</p><input type="password" name="repeatpass" id="repeatPass">
+                    <p>Email</p><input type="email" name="email" id="email">
+                    <p>Lenguaje</p> <select name="language" id="languaje">
                                 <option value="Spain">Español</option>
                                 <option value="English">Inglés</option>
                     </select>
@@ -126,7 +133,6 @@ function CambiaSala($user){
       </div>
       <div class="modal-body">
         <p>Indique el nombre de la sala</p><input type="text" name="user" id="name-chat">
-        <br><br><label><input type="checkbox" name="chat" id="private"><span>Click si deseas que su sala sea privada</span></label>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -145,7 +151,7 @@ function CambiaSala($user){
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body row">
+      <div class="modal-body row" id="delete-user">
         <div class="col-sm-2"></div>
         <div class="col-sm-6">
           <p id="name-student">Nombre del alumno</p>

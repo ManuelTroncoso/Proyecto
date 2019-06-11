@@ -1,0 +1,1 @@
+user=[{"user":"Jose Luis","id":"3","email":"manuelsnok@gmail.com","sala":"prueba3","photo":null,"born":"26-11-1960","tuit":null}]

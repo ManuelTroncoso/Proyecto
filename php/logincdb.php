@@ -2,15 +2,26 @@
     $usuario = $_REQUEST['usuario']; 
     $pass = $_REQUEST['pass'];
     $email = $_REQUEST['email'];
+    $code = $_REQUEST['code'];
+    $born = $_REQUEST['born'];
+    $lang = $_REQUEST['lang'];
     $con = mysqli_connect('localhost', 'calcu', 'calcu', 'account') or die("La conexion no ha sido posible establecerla");
     //$db = mysqli_select_db($con, 'usuarios') or die("La conexion no se ha podido establecer");
     $con->query("set names utf8");
-    $consulta = $con->query( "insert into teacherAccount (user, password, email) values('$usuario', '$pass', '$email') ;");
-    if($consulta){
-        echo"true";
+    $consulta = $con->query("select * from codes where Id = '$code';");
+    if($consulta->num_rows > 0){
+        $consulta = $con->query( "insert into teacherAccount (user, password, email, born, private, language) values('$usuario', '$pass', '$email', '$born', 0, '$lang');");
+        if($consulta){
+            $con->query("DELETE FROM codes WHERE id = '$code'");
+            echo"true";
+        }
+        else{
+            echo "false";
+        }
     }
     else{
-        echo"false";
+        echo "NoCode";
     }
-    $con->close();
+$con->close();
+    
 ?>

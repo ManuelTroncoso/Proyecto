@@ -8,7 +8,7 @@
         //if($consulta->num_row > 0){
             $salida = array();
             $salida =  $consulta->fetch_all(MYSQLI_ASSOC);
-            $fh = fopen("../profile/selectProfile.js", 'w');
+            $fh = fopen("../profile/selectProfile$name.js", 'w');
             fwrite($fh, "user=".json_encode($salida));
             fclose($fh);
             echo "Ready";

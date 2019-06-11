@@ -56,9 +56,15 @@
             <p>Contraseña</p><input type="password" name="pass" id="">
             <p>Repetir contraseña</p><input type="password" name="repeatpass" id="">
             <p>Email</p><input type="email" name="email" id="">
+            <p>Fecha de nacimeinto</p><input type="Date" name="born" id="">
+            <p>Lenguaje</p> <select name="language" id="languaje">
+                                <option value="Spain">Español</option>
+                                <option value="English">Inglés</option>
+            </select>
+            <p>Code</p><input type="text" name="code" id="">
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="ok">Entrar</button>
+                <button type="button" class="btn btn-primary" id="ok"  onclick="ClickOk()">Entrar</button>
               </div>
         </div>
         </div>

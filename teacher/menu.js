@@ -41,13 +41,15 @@ function ShowUser() {
             console.log(datos)
             for (i = 0; i < datos.length; i++) {
                 if (datos[i].user != user) {
+                    sala = datos[i].sala==null? '-': datos[i].sala;
                     $('#list-Teacher').append(`<div class="row student-data"> 
                     <div class="col-sm-2"></div>
                     <div class="col-sm-2"><a href="#" onclick="profileUser('`+ datos[i].user + `')"  id="profile` + datos[i].id + `">Ver perfil</a></div>
                     <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
-                    <div class="col-sm-2"><p>`+ datos[i].sala + `</p></div>
+                    <div class="col-sm-2"><p>`+ sala + `</p></div>
                     <div class="col-sm-2"><button onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `">Cambiar de sala</button></div>
                     </div>`)
+                    sala == '-' ? $('#'+datos[i].id).attr("disabled", true):$('#'+datos[i].id).attr("disabled", false); 
                 }
 
             }
@@ -85,7 +87,6 @@ function ChangeChat(salachat) {
         }
     });
     location.reload();
-    //location.href = '../Chat/index.php';
 }
 function RegistroAjax() {
     $.ajax({
@@ -121,7 +122,7 @@ function profileUser(name) {
         data: { nameUser: name },
         success: function (datos) {
             if (datos == "Ready") {
-                location.href = "profile/profile.php";
+                location.href = "profile/profile.php?userProfile="+name;
             }
             // else{
             //     if(datos == "Private"){
@@ -137,8 +138,8 @@ function CreateChat(nameSala, privateSala) {
         method: "post",
         data: { sala: nameSala, private: privateSala, userName: user },
         success: function (datos) {
-            location.reload();
-            location.href = "../Chat/index.php";
+            location.reload(true);
+            // location.href = "../Chat/index.php";
         }
     });
 }
@@ -183,7 +184,7 @@ function clearLink() {
     ShowUser();
 }
 function ShowStudentDelete(){
-    $("#delete-user").html("");
+    $("#delete-user").html('<div class="col-sm-2"></div><div class="col-sm-6"><p id="name-student">Nombre del alumno</p></div><div class="col-sm-4"><p >Borrar</p></div>');
     $.ajax({
         url: 'php/loadStudent.php',
         method: "post",
@@ -192,7 +193,7 @@ function ShowStudentDelete(){
         success: function (datos) {
             for(i=0; i<datos.length;i++){
                 $("#delete-user").append(
-                    '<div class="col-sm-2"></div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
+                    '<div class="col-sm-2">q</div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
                         `<div class="col-sm-4"><button onclick="DeleteStudent('`+datos[i].user+`')">Borrar</button></div>`)
             }
             //console.log(datos)

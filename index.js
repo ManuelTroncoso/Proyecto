@@ -1,5 +1,6 @@
+var choose;
 $(function(){
-    let choose = "registro";
+    choose = "registro";
     $("#sing-in").click(function(){
         Entrar();
         choose = "entrar";
@@ -8,39 +9,50 @@ $(function(){
         Registro();
         choose = "registro";
     })
-    $("#ok").click(function(){
-        //console.log("a")
-        if(Comprueba()){
-            if(choose == "entrar"){
-                ConexionAjax();
-            }else{
-                if(password()){
-                    RegistroAjax();
-                }else{
-                    $("#input-error").html(`<div class="alert alert-danger">
-                        <strong>Error!</strong> Las contraseñas no coinciden
-                    </div>`)
-                }                
-            }
-        }
-        else{
-            $("#input-error").html(`<div class="alert alert-danger">
-            <strong>Error!</strong> Por favor, rellene todos los campos
-          </div>`)
-        }
-        //Sino mensaje de que rellene todos los datos
+    // $("#ok").click(function(){
+    //     //console.log("a")
+       
+    //     //Sino mensaje de que rellene todos los datos
         
-    });
+    // });
 })
 
+function ClickOk(){
+    if(Comprueba()){
+        if(choose == "entrar"){
+            ConexionAjax();
+        }else{
+            if(password()){
+                RegistroAjax();
+            }else{
+                $("#input-error").html(`<div class="alert alert-danger">
+                    <strong>Error!</strong> Las contraseñas no coinciden
+                </div>`)
+            }                
+        }
+    }
+    else{
+        $("#input-error").html(`<div class="alert alert-danger">
+        <strong>Error!</strong> Por favor, rellene todos los campos
+      </div>`)
+    }
+}
 function Registro(){
-    $("#frm-show").html(`<div id="input-error"></div><p>Usuario</p><input type="text" name="user" id="" value="">
-    <p>Contraseña</p><input type="password" name="pass" id=""> 
-    <p>Repetir contraseña</p><input type="password" name="repeatpass" id="">
-    <p>Email</p><input type="email" name="email" id="">
+    $("#frm-show").html(` <div id="input-error"></div>
+
+    <p>Usuario</p><input type="text" name="user" id="user">
+    <p>Contraseña</p><input type="password" name="pass" id="pass">
+    <p>Repetir contraseña</p><input type="password" name="repeatpass" id="repeatpass">
+    <p>Email</p><input type="email" name="email" id="email">
+    <p>Fecha de nacimiento</p><input type="Date" name="born" id="born">
+    <p>Lenguaje</p> <select name="language" id="languaje">
+            <option value="Spain">Español</option>
+            <option value="English">Inglés</option>
+        </select>
+    <p>Code</p><input type="text" name="code" id="code">
     <div class="modal-footer">
-    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-    <button type="button" class="btn btn-primary" id="ok">Entrar</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" id="ok" onclick="ClickOk()">Entrar</button>
     </div>`)
     $('#sing-up').css("background-color","silver")
     $('#sing-in').css("background-color","white")
@@ -83,8 +95,10 @@ function RegistroAjax(){
     $.ajax({
         url: '/php/logincdb.php',
         method: "post",
-        data: { usuario: $('[name="user"]').val(), pass:$('[name="pass"]').val(), email:$('[name="email"]').val() },
+        data: { usuario: $('[name="user"]').val(), pass:$('[name="pass"]').val(), email:$('[name="email"]').val(), code:$('[name="code"]').val(), 
+        born:$('[name="born"]').val(), lang:$('[name="language"]').val() },
         success: function (datos) {
+            console.log(datos)
             if(datos == "true"){
                 $("#input-error").html("")
                 var inputs = document.getElementById('frm-show').getElementsByTagName('input');
@@ -97,11 +111,24 @@ function RegistroAjax(){
                 </div>`)
             }
             else{
-                $("#frm-show").html("Actualmente hay un error en el sistema porfavor intentelo de nuevo mas tarde");
+                if(datos == "NoCode"){
+                    $("#input-error").html("")
+                    var inputs = document.getElementById('frm-show').getElementsByTagName('input');
+                    value = true;
+                    for (let i = 0; i < inputs.length; i++) {
+                        inputs[i].value = "";
+                    };
+                    $("#input-error").html(`<div class="alert alert-danger">
+                    <strong>Código no correcto.</strong> Por favor utilice un código valido </div>`)
+                }
+                else{
+                    $("#frm-show").html("Actualmente hay un error en el sistema porfavor intentelo de nuevo mas tarde");
+                }
             }
         }
     });
 }
+
 // function ConexionAjax(){
 //     $.ajax({
 //         url: '/php/db.php',
