@@ -1,4 +1,53 @@
-.modal-header{
-    margin-right: 0px !important;
-    margin-left: 0px !important; 
+/*Table show profile*/
+#list-Teacher-title{
+    margin-top: 10px;
 }
+#list-Teacher{
+    margin-bottom:200px;
+}
+.white{
+    color:white;
+}
+.student-data{
+    border-bottom: 1px solid black;
+    width: 70%;
+    margin-left: 15%;
+    padding: 10px;
+}
+.student-data-title{
+    background-color: var(--primary-color);
+    width: 70%;
+    margin-left: 15%;
+}
+.student-data>div>p{
+    text-align: center;
+}
+.p{
+    text-align: center;
+    padding: 5.5px;
+    margin: 0;
+}
+.change-sala{
+    background-color: transparent;
+    border: none;
+}
+
+.student-data:nth-child(even){
+    background-color: rgba(0, 132, 255, 0.123);
+}
+
+/*footer*/
+.footer{
+    position: fixed;
+    bottom: 0;
+    width: 100% !important;
+    height:100px  !important;
+    background-color: black;
+    color:white;
+    margin: 0 !important;
+}
+.footer p{
+    margin-top: 15px;
+}
+
+

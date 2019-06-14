@@ -1,1 +1,1 @@
-user=[{"user":"Alumno12","id":"23","email":"manuelsnok@gmail.com","sala":null,"photo":null,"born":"2019-05-29","tuit":"[{\"id\":\"0\",\"name\":\"Alumno12\",\"tuit\":\"gh\",\"date\":\"11\/6\/2019\"},{\"id\":\"1\",\"name\":\"Alumno12\",\"tuit\":\"dfh\",\"date\":\"11\/6\/2019\"}]"}]
+user=[{"user":"Alumno12","id":"31","email":"manuelsnok@gmail.com","sala":"klvznmn","photo":null,"born":"2019-06-13","tuit":"[{\"id\":\"0\",\"name\":\"Alumno12\",\"tuit\":\"fgbgbd\",\"date\":\"14\/6\/2019\"}]","Retuit":"[{\"id\":\"0\",\"name\":\"Manuel\",\"tuit\":\"hgj\",\"date\":\"26\/5\/2019\"}]"}]

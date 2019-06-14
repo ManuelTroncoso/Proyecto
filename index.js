@@ -54,8 +54,9 @@ function Registro(){
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
         <button type="button" class="btn btn-primary" id="ok" onclick="ClickOk()">Entrar</button>
     </div>`)
-    $('#sing-up').css("background-color","silver")
-    $('#sing-in').css("background-color","white")
+    $('#sing-up').css("border","1px solid var(--primary-color)")
+    $('#sing-in').css("border","none")
+   
 
 }
 function Entrar(){
@@ -68,8 +69,9 @@ function Entrar(){
     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
     <button type="submit" class="btn btn-primary" id="ok">Entrar</button>
     </div></form>`)
-    $('#sing-in').css("background-color","silver")
-    $('#sing-up').css("background-color","white")
+    $('#sing-in').css("border","1px solid var(--primary-color)")
+    $('#sing-in').css("border-radius","15px")
+    $('#sing-up').css("border","none")
 
 }
 //Comprobar que no sean espacios en blanco unicamente
@@ -78,7 +80,7 @@ function Comprueba(){
     var inputs = document.getElementsByTagName('input');
     value = true;
     for(let i = 0; i<inputs.length;i++){
-        value = inputs[i].value != ""
+        value = inputs[i].value.replace(/ /g, "") != ""
         if(!value){
             return false;
         }
@@ -95,7 +97,7 @@ function RegistroAjax(){
     $.ajax({
         url: '/php/logincdb.php',
         method: "post",
-        data: { usuario: $('[name="user"]').val(), pass:$('[name="pass"]').val(), email:$('[name="email"]').val(), code:$('[name="code"]').val(), 
+        data: { usuario: $('[name="user"]').val().replace(/ /g, ""), pass:$('[name="pass"]').val(), email:$('[name="email"]').val(), code:$('[name="code"]').val(), 
         born:$('[name="born"]').val(), lang:$('[name="language"]').val() },
         success: function (datos) {
             console.log(datos)
@@ -113,16 +115,18 @@ function RegistroAjax(){
             else{
                 if(datos == "NoCode"){
                     $("#input-error").html("")
-                    var inputs = document.getElementById('frm-show').getElementsByTagName('input');
-                    value = true;
-                    for (let i = 0; i < inputs.length; i++) {
-                        inputs[i].value = "";
-                    };
                     $("#input-error").html(`<div class="alert alert-danger">
                     <strong>Código no correcto.</strong> Por favor utilice un código valido </div>`)
                 }
                 else{
-                    $("#frm-show").html("Actualmente hay un error en el sistema porfavor intentelo de nuevo mas tarde");
+                    if(datos == "UserError"){
+                        $("#input-error").html("")
+                        $("#input-error").html(`<div class="alert alert-danger">
+                        <strong>Usuario ya registrado.</strong>Por favor pruebe con otro nombre </div>`)
+                    }
+                    else{
+                        $("#frm-show").html("Actualmente hay un error en el sistema, pruebe a recargar la página. Si el problema continua contacte con el administrador de la web");
+                    }
                 }
             }
         }

@@ -1,5 +1,6 @@
+boolTeacher = true;
 $(function () {
-    ShowUser();
+    ShowUser(true);
     $("#ok").click(function () {
         if (Comprueba()) {
             if (password()) {
@@ -32,31 +33,44 @@ $(function () {
         }
     })
 })
-function ShowUser() {
+function ShowUser(teacher) {
+    boolTeacher = teacher;
+    hasDate=false;
+    $('#list-Teacher').html("");
     $.ajax({
-        url: 'php/allTeacher.php',
+        async:false,
+        url: teacher == true?'/teacher/php/allTeacher.php':'/teacher/php/allStudent.php',
         method: "get",
         dataType: "json",
         success: function (datos) {
-            console.log(datos)
+           // console.log(teacher)
             for (i = 0; i < datos.length; i++) {
                 if (datos[i].user != user) {
                     sala = datos[i].sala==null? '-': datos[i].sala;
                     $('#list-Teacher').append(`<div class="row student-data"> 
-                    <div class="col-sm-2"></div>
-                    <div class="col-sm-2"><a href="#" onclick="profileUser('`+ datos[i].user + `')"  id="profile` + datos[i].id + `">Ver perfil</a></div>
-                    <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
-                    <div class="col-sm-2"><p>`+ sala + `</p></div>
-                    <div class="col-sm-2"><button onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `">Cambiar de sala</button></div>
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-2"><p class="text-center"><a href="#" onclick="profileUser('`+ datos[i].user + `',`+teacher+`)"  id="profile` + datos[i].id + `"><img src="../css/icon/ver.svg" width="35px"></a></p></div>
+                    <div class="col-sm-3"><p class="text-center p" id="teacher-name">`+ datos[i].user + ` <img src="../css/icon/`+datos[i].language+`.svg" width="16px"></p></div>
+                    <div class="col-sm-3"><p class="text-center p">`+ sala + `</p></div>
+                    <div class="col-sm-2"><button class="change-sala" onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `"><img src="../css/icon/bocadillo.svg" width="35px"></button></div>
                     </div>`)
                     sala == '-' ? $('#'+datos[i].id).attr("disabled", true):$('#'+datos[i].id).attr("disabled", false); 
                 }
-
+                
             }
+            
         }
     });
+    HasDate('#list-Teacher');
+    
 }
-
+function HasDate(x){
+    if($(x).html() == ""){
+        $('#list-Teacher').append(`<div class="row"><img src="../css/icon/void.svg" width="170px" id="void" alt=""></div>
+        <h3 class="text-center">No hay elementos para mostrar</h3>
+        <h3 class="text-center">Pruebe mas tarde</h3>`)
+    }
+}
 
 //profile/profile.php?userProfile=Juan
 function Comprueba() {
@@ -64,7 +78,7 @@ function Comprueba() {
     var inputs = document.getElementById('frm-show').getElementsByTagName('input');
     value = true;
     for (let i = 0; i < inputs.length; i++) {
-        value = inputs[i].value != "";
+        value = inputs[i].value.replace(/ /g, "") != "";
         if (!value) {
             return false;
         }
@@ -92,7 +106,7 @@ function RegistroAjax() {
     $.ajax({
         url: 'php/loginStudentdb.php',
         method: "post",
-        data: { usuario: $('[name="user"]').val(), idTeacher: id,pass: $('[name="pass"]').val(), email: $('[name="email"]').val(), language: $('[name="language"]').val(), sala: sala },
+        data: { usuario: $('[name="user"]').val().replace(/ /g, ""), idTeacher: id,pass: $('[name="pass"]').val(), email: $('[name="email"]').val(), language: $('[name="language"]').val(), sala: sala },
         success: function (datos) {
             console.log(datos)
             if (datos == "true") {
@@ -109,15 +123,25 @@ function RegistroAjax() {
 
             }
             else {
-                $("#frm-show").html("Actualmente hay un error en el sistema porfavor intentelo de nuevo mas tarde");
+                if(datos == "UserError"){
+                    $("#input-error").html("")
+                    $("#input-error").html(`<div class="alert alert-danger">
+                    <strong>Error!! </strong>El nombre de usuario ya existe
+                    </div>`)
+                }
+                else{
+                    $("#frm-show").html("Actualmente hay un error en el sistema, pruebe a recargar la página. Si el problema continua contacte con el administrador de la web");
+                }
             }
         }
     });
 }
 
-function profileUser(name) {
+function profileUser(name, teacher = boolTeacher) {
+    //console.log(teacher)
+    
     $.ajax({
-        url: 'php/allTeacher.php',
+        url: teacher == true ?'php/allTeacher.php': 'php/allStudent.php',
         method: "post",
         data: { nameUser: name },
         success: function (datos) {
@@ -132,9 +156,30 @@ function profileUser(name) {
         }
     });
 }
+
+
+function ChangeDateShow(x){
+    if(!($("#"+x).hasClass("active"))&& x=='teacher'){
+        //ShowUser(true);
+        $("#"+x).addClass("btn-link active").removeClass("btn-primary")
+        $("#student").removeClass("btn-link active").addClass("btn-primary");
+        boolTeacher = true;
+        clearLink();
+    }
+    else{
+        if(!($("#"+x).hasClass("active")) && x=='student'){
+            //ShowUser(false);
+            $("#"+x).addClass("btn-link active").removeClass("btn-primary")
+            $("#teacher").removeClass("btn-link active").addClass("btn-primary");
+            boolTeacher = false;
+            clearLink();
+        }
+    }
+
+}
 function CreateChat(nameSala, privateSala) {
     $.ajax({
-        url: '../Chat/addChat.php',
+        url: '/Chat/addChat.php',
         method: "post",
         data: { sala: nameSala, private: privateSala, userName: user },
         success: function (datos) {
@@ -144,29 +189,29 @@ function CreateChat(nameSala, privateSala) {
     });
 }
 function Search() {
-
+    console.log(boolTeacher)
     var sSearch = $("#search").val(),
         sSearchNew = sSearch.trim();
 
     $('#list-Teacher').html("");
     if (sSearchNew != "") {
         $("#filter-name").text(sSearchNew);
-        $("#filter-name").append('<button class="btn btn-link" onclick="clearLink()"> Eliminar Filtros</button>')
+        $("#filter-name").append('<a> <img onclick="clearLink()" src="../css/icon/cancelar.svg" style="margin-left:15px" width="15px"></a>')
         $.ajax({
             url: 'php/search.php',
             method: "post",
-            data: { nameUser: sSearchNew },
+            data: { nameUser: sSearchNew, boolTeacher: boolTeacher },
             success: function (datos) {
                 datos = JSON.parse(datos);
                 for (i = 0; i < datos.length; i++) {
                     if (datos[i].user != user) {
                         $('#list-Teacher').append(`<div class="row student-data"> 
-                            <div class="col-sm-2"></div>
-                            <div class="col-sm-2"><a href="#" onclick="profileUser('`+ datos[i].user + `')"  id="profile` + datos[i].id + `">Ver perfil</a></div>
-                            <div class="col-sm-3"><p id="teacher-name">`+ datos[i].user + `</p></div>
-                            <div class="col-sm-2"><p>`+ datos[i].sala + `</p></div>
-                            <div class="col-sm-2"><button onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `">Cambiar de sala</button></div>
-                            </div>`)
+                        <div class="col-sm-1"></div>
+                        <div class="col-sm-2"><p class="text-center"><a href="#" onclick="profileUser('`+ datos[i].user + `',`+teacher+`)"  id="profile` + datos[i].id + `"><img src="../css/icon/ver.svg" width="35px"></a></p></div>
+                        <div class="col-sm-3"><p class="text-center p" id="teacher-name">`+ datos[i].user + ` <img src="../css/icon/`+datos[i].language+`.svg" width="16px"></p></div>
+                        <div class="col-sm-3"><p class="text-center p">`+ sala + `</p></div>
+                        <div class="col-sm-2"><button class="change-sala" onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `"><img src="../css/icon/bocadillo.svg" width="35px"></button></div>
+                        </div>`)
                     }
 
                 }
@@ -175,13 +220,13 @@ function Search() {
     }
     else {
         $("#filter-name").text("No hay ninguna busqueda actualmente");
-        ShowUser();
+        ShowUser(boolTeacher);
     }
 }
 function clearLink() {
     $("#search").val("");
     $("#filter-name").text("No hay ninguna busqueda actualmente");
-    ShowUser();
+    ShowUser(boolTeacher);
 }
 function ShowStudentDelete(){
     $("#delete-user").html('<div class="col-sm-2"></div><div class="col-sm-6"><p id="name-student">Nombre del alumno</p></div><div class="col-sm-4"><p >Borrar</p></div>');
@@ -193,8 +238,8 @@ function ShowStudentDelete(){
         success: function (datos) {
             for(i=0; i<datos.length;i++){
                 $("#delete-user").append(
-                    '<div class="col-sm-2">q</div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
-                        `<div class="col-sm-4"><button onclick="DeleteStudent('`+datos[i].user+`')">Borrar</button></div>`)
+                    '<div class="col-sm-2"> </div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
+                        `<div class="col-sm-4"><a href="#"><img src="/css/icon/borrar.svg" width="16px" onclick="DeleteStudent('`+datos[i].user+`')"/> </a></div>`)
             }
             //console.log(datos)
         }

@@ -1,1 +1,0 @@
-user=[{"user":"Alumno12","id":"14","email":"manuelsnok@gmail.com","sala":"klvznmn","photo":null,"born":"2019-05-30","tuit":null}]

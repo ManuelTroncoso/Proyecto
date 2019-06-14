@@ -4,7 +4,7 @@
     $con->query("set names utf8");
     $name = $_REQUEST['nameUser'];
     if($name != ""){
-    $consulta = $con->query( "select user, id, email, sala, photo, born, tuit, Retuit from teacherAccount where '$name' = user" /*and private = 0"*/);
+    $consulta = $con->query( "select user, id, email, sala, photo, born, tuit, Retuit from stuedntAccount where '$name' = user" /*and private = 0"*/);
         //if($consulta->num_row > 0){
             $salida = array();
             $salida =  $consulta->fetch_all(MYSQLI_ASSOC);
@@ -18,7 +18,7 @@
         //}
     }
     else{
-        $consulta = $con->query( "select user, id, email, sala, language from teacherAccount");
+        $consulta = $con->query( "select user, id, email, sala, language from studentAccount");
     
         if ($consulta->num_rows > 0){
             $salida = array();

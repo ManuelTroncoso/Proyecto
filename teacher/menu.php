@@ -39,35 +39,41 @@ function CambiaSala($user){
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>LearningChatting</title>
-    <link rel="stylesheet" href="menu.css">
 
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+
     <script>
       var sala = '<?php echo $sala;?>'
       var user = '<?php echo $user;?>'
       var id = '<?php echo $id;?>'
     </script>
     <script src="menu.js"></script>
+    <link rel="stylesheet" href="/css/global.css">
+    <link rel="stylesheet" href="menu.css">
+
 </head>
 
 <body>
+<div class="container-fluid">
+   
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03"
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#"><img src="../css/icon/icon-ppal.svg" width="48px" alt=""></a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link id" href="#" onclick="profileUser('<?php echo $user?>')" id="<?php echo $id?>"> <?php echo $user?> </a>
+                    <a class="nav-link id" href="#" onclick="profileUser('<?php echo $user?>', true)" id="<?php echo $id?>"> <?php echo $user?> </a>
                 </li>
-                <li class="nav-item active">
+                <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#addModal">Añadir <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
@@ -80,16 +86,15 @@ function CambiaSala($user){
                     <a class="nav-link" class="btn btn-primary" href="<?php echo $url?>" <?php echo $modal;?> > Sala Nº: <?php echo $_SESSION['sala']; ?></a>
                 </li> 
                 <li class="nav-item">
-                    <a class="nav-link"  href="<?php echo "../cerrarSesion.php" ?>">Cerrar Sesión</a>
+                    <a class="nav-link"  href="<?php echo "/cerrarSesion.php" ?>">Cerrar Sesión</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" id="search" placeholder="Search" aria-label="Search">
-                <a class="btn btn-outline-success my-2 my-sm-0" role="button" onclick="Search()">Search</a>
+                <input class="form-control mr-sm-2" type="search" id="search" placeholder="Escribe el nombre..." aria-label="Search">
+                <a class="btn btn-outline-success my-2 my-sm-0" role="button" onclick="Search()"><img src="../css/icon/lupa.svg" width="24px" alt=""></a>
             </form>
         </div>
     </nav>
-
     <!-- Modal -->
     <div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -170,17 +175,28 @@ function CambiaSala($user){
     <div id="list-Teacher-title">
     <div class="row">
     <div class="col-sm-2"></div>
-    <div class="col-sm-10"> <p>Filtros: <span id="filter-name"> No hay ninguna busqueda actualmente</span></p></div>    
+    <div class="col-sm-8"> <p class="text-center" >Filtros: <span id="filter-name"> No hay ninguna busqueda actualmente</span></p></div> 
+    <div class="col-sm-2"></div>   
     </div>
-      <div class="row student-data">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-2"><p id="teacher-name">Ver perfil</p></div>
-        <div class="col-sm-3"><p id="teacher-name">Nombre de Usuario</p></div>
-        <div class="col-sm-2"><p> Sala que perteneces</p></div>
+    <div class="row">
+      <div class="col-sm-6 text-right options "><button class="btn btn-link active" id="teacher" onclick="ChangeDateShow('teacher')">Profesor</button></div>
+      <div class="col-sm-6 options "><button class="btn btn-primary" id="student" onclick="ChangeDateShow('student')">Alumnos</button></div>
+    </div><br>
+      <div class="row student-data-title">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-2"><p class="text-center white" id="teacher-profile">Ver perfil</p></div>
+        <div class="col-sm-3"><p class="text-center white" id="teacher-name">Nombre de Usuario</p></div>
+        <div class="col-sm-3"><p class="text-center white"> Sala</p></div>
         <div class="col-sm-2"></div>
       </div>
     </div>
     <div id="list-Teacher"></div>
+    
+    </div>
+<div class="footer">
+  <p class="text-center">&copy; Copyright 20826, TGStudios</p>
+  <p class="text-center">learningchatting@gmail.com</p>
+</div>
 </body>
 
 </html>
