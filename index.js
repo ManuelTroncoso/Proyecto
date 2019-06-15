@@ -33,7 +33,7 @@ function ClickOk(){
     }
     else{
         $("#input-error").html(`<div class="alert alert-danger">
-        <strong>Error!</strong> Por favor, rellene todos los campos
+        <strong>Error!</strong>Algún campo puede estar vacios o ser incorrectos.
       </div>`)
     }
 }
@@ -77,10 +77,23 @@ function Entrar(){
 //Comprobar que no sean espacios en blanco unicamente
 function Comprueba(){
     $("#input-error").html("")
+    hoy = new Date();
+    hoy.setHours(0,0,0,0);
     var inputs = document.getElementsByTagName('input');
     value = true;
     for(let i = 0; i<inputs.length;i++){
-        value = inputs[i].value.replace(/ /g, "") != ""
+        value = inputs[i].value.replace(/ /g, "") != "";
+        if(inputs[i].name == 'born'){
+            dateform = new Date(inputs[i].value)
+            if(dateform>hoy){
+                return false;
+            }
+        }
+        if(inputs[i].name == 'email'){
+            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(inputs[i].value)){
+                return false;
+            }
+        }
         if(!value){
             return false;
         }
@@ -100,7 +113,7 @@ function RegistroAjax(){
         data: { usuario: $('[name="user"]').val().replace(/ /g, ""), pass:$('[name="pass"]').val(), email:$('[name="email"]').val(), code:$('[name="code"]').val(), 
         born:$('[name="born"]').val(), lang:$('[name="language"]').val() },
         success: function (datos) {
-            console.log(datos)
+            //console.log(datos)
             if(datos == "true"){
                 $("#input-error").html("")
                 var inputs = document.getElementById('frm-show').getElementsByTagName('input');

@@ -6,8 +6,8 @@
     //$db = mysqli_select_db($con, 'usuarios') or die("La conexion no se ha podido establecer");
     $con->query("set names utf8");
     if($student == "on"){
-        $consulta = $con->query( "select * from studentAccount where user = '$usuario' and password = '$pass' ;");
-        if ($consulta->num_rows > 0){
+        $consulta = $con->query( "select password from studentAccount where user = '$usuario';");
+        if (password_verify($pass, $consulta->fetch_all(MYSQLI_ASSOC)[0]['password'])){
             //$salida = array();
             //$salida = $consulta->fetch_all(MYSQLI_ASSOC);
             session_start();
@@ -15,7 +15,7 @@
             header("Location:../student/menu.php");       
         }
         else{
-            header("Location:../index.php?error=0");
+            header("Location:../index.php?error=1");
         }
     }
     else{

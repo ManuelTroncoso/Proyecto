@@ -10,8 +10,7 @@
 
 
 #contenedor{
-	width: 40%;
-	background: #fff;
+	width: 60%;
 	margin: 0 auto;
 	padding: 20px;
 	border-radius: 12px;
@@ -34,6 +33,7 @@
 }
 
 input[type='text']{
+	padding-left:15px;
 	width: 100%;
 	height: 40px;
 	border: 1px solid gray;
@@ -68,11 +68,21 @@ input, textarea{
 }
 
 #caja-send{
+	margin-left:22.5%;
 	position: fixed;
-	left: 50%;
+	/* left: 50%; */
 	bottom: 0;
-    transform: translateX(-50%);
-	width: 40%;
+    /* transform: translateX(-50%); */
+	width: 55%; 
 	padding: 20px;
   	background-color: #fff;
+}
+#caja-send>.row>*, #caja-send>.row{
+	margin-right: 0 !important;
+	margin-left: 0 !important;
+	padding-right: 0!important;
+	padding-left: 0!important;
+}
+#caja-send>.row>#text-menssage{
+	padding-right:15px !important; 
 }

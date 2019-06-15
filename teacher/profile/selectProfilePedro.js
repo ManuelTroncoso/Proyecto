@@ -1,0 +1,1 @@
+user=[{"user":"Pedro","id":"1","email":"pedro@gmail.com","sala":null,"photo":null,"born":"2019-05-29","tuit":null,"Retuit":null}]

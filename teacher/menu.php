@@ -7,11 +7,12 @@ $sala = $_SESSION['sala'];
 $id = $_SESSION['id'];
 $url = "";
 $modal  = "";
+CambiaSala($user);
 
 
-if($sala != 'ul'){
+if($_SESSION['sala'] != 'ul'){
   CambiaSala($user);
-  $url = "../Chat/index.php";
+  $url = "../Chat/index.php?type=00110";
 }else{
   CambiaSala($user);
    $url = "#";
@@ -28,6 +29,8 @@ function CambiaSala($user){
   $salida =  $consulta->fetch_all(MYSQLI_ASSOC);
   $sala =json_encode($salida[0]['sala']);
   $_SESSION['sala'] = substr(substr($sala, 1),0, strlen($sala) -2);
+  $sala = $_SESSION['sala'] ;
+  echo $sala;
   $con->close();
 }
 ?>
@@ -38,6 +41,8 @@ function CambiaSala($user){
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="shortcut icon" href="../css/icon/favicon.ico" />
+
     <title>LearningChatting</title>
 
     <!-- Bootstrap -->
@@ -66,13 +71,16 @@ function CambiaSala($user){
             aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="#"><img src="../css/icon/icon-ppal.svg" width="48px" alt=""></a>
+        <a class="navbar-brand" id="iconPpal" href="#"><img src="../css/icon/icon-ppal.svg" width="48px" alt=""></a>
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item">
                     <a class="nav-link id" href="#" onclick="profileUser('<?php echo $user?>', true)" id="<?php echo $id?>"> <?php echo $user?> </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" class="btn btn-primary" href=""  data-toggle="modal" data-target="#changePass">Cambiar contraseña</a>
+                </li> 
                 <li class="nav-item">
                     <a class="nav-link" href="#" data-toggle="modal" data-target="#addModal">Añadir <span class="sr-only">(current)</span></a>
                 </li>
@@ -85,6 +93,7 @@ function CambiaSala($user){
                 <li class="nav-item">
                     <a class="nav-link" class="btn btn-primary" href="<?php echo $url?>" <?php echo $modal;?> > Sala Nº: <?php echo $_SESSION['sala']; ?></a>
                 </li> 
+                
                 <li class="nav-item">
                     <a class="nav-link"  href="<?php echo "/cerrarSesion.php" ?>">Cerrar Sesión</a>
                 </li>
@@ -124,6 +133,30 @@ function CambiaSala($user){
             </div>
           </div>
         </div>
+      </div>   
+       <!-- Modal -->
+    <div class="modal fade" id="changePass" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header row">
+              <div class="col-sm-5 modal-title" id="sing-up"><h5>Registro</h5></div>     
+              <button type="button" class="close col-sm-2" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <div id="frm-show">
+                  <div id="input-error-pass"></div>
+                    <p>Nueva Contraseña</p><input type="password" name="newpass" id="newpass"> 
+                    <p>Repetir contraseña</p><input type="password" name="newrepeatpass" id="newrepeatpass">
+                </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary" id="change">Entrar</button>
+            </div>
+          </div>
+        </div>
       </div>
 
 <!-- Modal -->
@@ -137,6 +170,7 @@ function CambiaSala($user){
         </button>
       </div>
       <div class="modal-body">
+        <div id="input-error-chat"></div>
         <p>Indique el nombre de la sala</p><input type="text" name="user" id="name-chat">
       </div>
       <div class="modal-footer">
@@ -179,8 +213,8 @@ function CambiaSala($user){
     <div class="col-sm-2"></div>   
     </div>
     <div class="row">
-      <div class="col-sm-6 text-right options "><button class="btn btn-link active" id="teacher" onclick="ChangeDateShow('teacher')">Profesor</button></div>
-      <div class="col-sm-6 options "><button class="btn btn-primary" id="student" onclick="ChangeDateShow('student')">Alumnos</button></div>
+      <div class="col-6 text-right options "><button class="btn btn-link active" id="teacher" onclick="ChangeDateShow('teacher')">Profesor</button></div>
+      <div class="col-6 options "><button class="btn btn-primary" id="student" onclick="ChangeDateShow('student')">Alumnos</button></div>
     </div><br>
       <div class="row student-data-title">
         <div class="col-sm-1"></div>

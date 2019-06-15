@@ -21,8 +21,21 @@ $(function () {
 
     });
 
+    $("#change").click(function(){
+        
+        if($("#newpass").val()==$("#newrepeatpass").val() && $("#newpass").val().replace(/ /g, "")){
+            ChangePass($("#newpass").val());
+        }
+        else{
+            $("#input-error-pass").html("")
+                $("#input-error-pass").html(`<div class="alert alert-danger">
+                <strong>Error!! </strong>Las contraseñas no coinciden.
+                </div>`)
+        }
+    })
+
     $('#createChat').click(function () {
-        if ($("#name-chat").val() != "") {
+        if ($("#name-chat").val().replace(/ /g, "") != "") {
             if ($('#private').prop('checked')) {
                 CreateChat($("#name-chat").val(), "1");
             }
@@ -30,6 +43,11 @@ $(function () {
                 CreateChat($("#name-chat").val(), "0");
 
             }
+        }
+        else{
+            $("#input-error-chat").html(`<div class="alert alert-danger">
+                <strong>Error!! </strong>Nombre de la sala vacía
+            </div>`)
         }
     })
 })
@@ -52,7 +70,7 @@ function ShowUser(teacher) {
                     <div class="col-sm-2"><p class="text-center"><a href="#" onclick="profileUser('`+ datos[i].user + `',`+teacher+`)"  id="profile` + datos[i].id + `"><img src="../css/icon/ver.svg" width="35px"></a></p></div>
                     <div class="col-sm-3"><p class="text-center p" id="teacher-name">`+ datos[i].user + ` <img src="../css/icon/`+datos[i].language+`.svg" width="16px"></p></div>
                     <div class="col-sm-3"><p class="text-center p">`+ sala + `</p></div>
-                    <div class="col-sm-2"><button class="change-sala" onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `"><img src="../css/icon/bocadillo.svg" width="35px"></button></div>
+                    <div class="col-sm-2"><p class="text-center"><button class="change-sala" onclick="ChangeChat('`+ datos[i].sala + `')" id="` + datos[i].id + `"><img src="../css/icon/bocadillo.svg" width="35px"></button></p></div>
                     </div>`)
                     sala == '-' ? $('#'+datos[i].id).attr("disabled", true):$('#'+datos[i].id).attr("disabled", false); 
                 }
@@ -67,8 +85,8 @@ function ShowUser(teacher) {
 function HasDate(x){
     if($(x).html() == ""){
         $('#list-Teacher').append(`<div class="row"><img src="../css/icon/void.svg" width="170px" id="void" alt=""></div>
-        <h3 class="text-center">No hay elementos para mostrar</h3>
-        <h3 class="text-center">Pruebe mas tarde</h3>`)
+        <h3 class="text-center void">No hay elementos para mostrar</h3>
+        <h3 class="text-center void">Pruebe mas tarde</h3>`)
     }
 }
 
@@ -79,6 +97,11 @@ function Comprueba() {
     value = true;
     for (let i = 0; i < inputs.length; i++) {
         value = inputs[i].value.replace(/ /g, "") != "";
+        if(inputs[i].name == 'email'){
+            if(!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,4})+$/.test(inputs[i].value)){
+                return false;
+            }
+        }
         if (!value) {
             return false;
         }
@@ -91,16 +114,37 @@ function password() {
     }
 }
 function ChangeChat(salachat) {
-    console.log(user)
+    //console.log(user)
     $.ajax({
         url: 'php/changeChat.php',
         method: "post",
         data: { chat: salachat, nameUser: user },
         success: function (datos) {
-            console.log(datos)
+            
+            if(datos == "ready"){
+                location.reload();
+            }
+            
         }
     });
-    location.reload();
+}
+function ChangePass(pass) {
+    $.ajax({
+        url: 'php/changePassTeacher.php',
+        method: "post",
+        data: { pass: pass, nameUser: user },
+        success: function (datos) {
+            if(datos == "ready"){
+                location.reload();
+            }
+            else{
+                $("#input-error-pass").html("")
+                $("#input-error-pass").html(`<div class="alert alert-danger">
+                <strong>Error!! </strong>Actualmente no podemos realizar el cambio de contraseña.
+                </div>`)
+            }
+        }
+    });
 }
 function RegistroAjax() {
     $.ajax({
@@ -138,6 +182,7 @@ function RegistroAjax() {
 }
 
 function profileUser(name, teacher = boolTeacher) {
+    // console.log(teacher, name)
     //console.log(teacher)
     
     $.ajax({
@@ -177,7 +222,8 @@ function ChangeDateShow(x){
     }
 
 }
-function CreateChat(nameSala, privateSala) {
+function CreateChat(nameSala, privateSala) 
+{
     $.ajax({
         url: '/Chat/addChat.php',
         method: "post",
@@ -229,7 +275,7 @@ function clearLink() {
     ShowUser(boolTeacher);
 }
 function ShowStudentDelete(){
-    $("#delete-user").html('<div class="col-sm-2"></div><div class="col-sm-6"><p id="name-student">Nombre del alumno</p></div><div class="col-sm-4"><p >Borrar</p></div>');
+    $("#delete-user").html('<div class="col-2"></div><div class="col-6"><p id="name-student"><strong>Nombre</strong></p></div><div class="col-4"><p ><strong>Borrar</strong></p></div>');
     $.ajax({
         url: 'php/loadStudent.php',
         method: "post",
@@ -238,8 +284,8 @@ function ShowStudentDelete(){
         success: function (datos) {
             for(i=0; i<datos.length;i++){
                 $("#delete-user").append(
-                    '<div class="col-sm-2"> </div><div class="col-sm-6"><p id="name-student">'+datos[i].user+'</p></div>'+
-                        `<div class="col-sm-4"><a href="#"><img src="/css/icon/borrar.svg" width="16px" onclick="DeleteStudent('`+datos[i].user+`')"/> </a></div>`)
+                    '<div class="col-2"> </div><div class="col-6"><p id="name-student">'+datos[i].user+'</p></div>'+
+                        `<div class="col-4"><a href="#"><img src="/css/icon/borrar.svg" width="16px" onclick="DeleteStudent('`+datos[i].user+`')"/> </a></div>`)
             }
             //console.log(datos)
         }

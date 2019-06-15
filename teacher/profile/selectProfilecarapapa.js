@@ -1,0 +1,1 @@
+user=[{"user":"carapapa","id":"38","email":"alkjflksf@gmail.com","sala":null,"photo":null,"tuit":null,"Retuit":null}]

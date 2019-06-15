@@ -1,0 +1,48 @@
+
+
+.box-tuit{
+    border-bottom:1px solid var(--primary-color);;
+    margin-bottom:15px;
+}
+#id-tuit{
+    border-radius: .25rem;
+    border: 1px solid var(--primary-color);;
+    height: 55px;
+    margin-left: 35%;  
+    padding: 15px;
+    width: 30%;
+}
+#btn-add-tuit{
+    float: right;
+    margin-right: 35%;
+    margin-bottom:15px;
+
+}
+h1{
+    border-bottom: 1px solid var(--primary-color);
+    margin-right:35%;
+    margin-left:35%;
+}
+/*Tuit*/
+.name{
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.retuit{
+    font-size: 0.8em;
+    border: transparent;
+    padding: 0;
+}
+.tuit{
+    margin-bottom: 0;
+}
+.date{
+    font-size: 0.8em;
+    float:right;
+}
+#add-Tuit{
+    display: none;
+}
+.retuit{
+    display: none
+}

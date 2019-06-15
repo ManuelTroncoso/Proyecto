@@ -1,0 +1,1 @@
+user=[{"user":"Alumno12","id":"31","email":"manuelsnok@gmail.com","sala":"dsfsd","photo":null,"born":"2019-06-13","tuit":"[{\"id\":\"0\",\"name\":\"Alumno12\",\"tuit\":\"fgbgbd\",\"date\":\"14\/6\/2019\"}]","Retuit":"[{\"id\":\"0\",\"name\":\"Manuel\",\"tuit\":\"hgj\",\"date\":\"26\/5\/2019\"}]"}]

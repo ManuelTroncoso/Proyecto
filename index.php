@@ -1,3 +1,7 @@
+
+<?php
+session_destroy();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -5,6 +9,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="shortcut icon" href="css/icon/favicon.ico" />
   <title>LearningChatting</title>
 
   <!-- Bootstrap -->
@@ -22,12 +27,15 @@
 
 <body>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#"><img src="../css/icon/icon-ppal.svg" width="48px" alt=""></a>
+  
+  <a class="navbar-brand" href="#"  id="iconPpal"><img src="../css/icon/icon-ppal.svg" width="48px" alt=""></a>
+  <h2 class="title">LearningChatting</h2>
+
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <h2>LearningChatting</h2>
+   
     <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
       <span class="navbar-text">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#logModal">Registro/Entrar</a>
@@ -99,7 +107,7 @@
     </div>
     <div class="carousel-item">
       <img class="d-block w-100 imgcarusel" src="../css/photo/foto2.jpg" alt="Second slide">
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption d-none d-block">
         <h5>¿Cómo consigo una cuenta?</h5>
         <p>La unica forma de conseguir una cuenta es entrando en contacto con nosotros a través de nuestro correo "learningchatting@gmail.com", desde el cual le proporcionaremos un
           código a traves del cual podrá registrarse en nuestra web
@@ -108,7 +116,7 @@
     </div>
     <div class="carousel-item">
       <img class="d-block w-100 imgcarusel" src="../css/photo/foto3.jpg" alt="Third slide">
-      <div class="carousel-caption d-none d-md-block">
+      <div class="carousel-caption d-none d-block">
         <h5>Creadores</h5>
         <p>&copy; Copyright 20826, TGStudios</p>
       </div>

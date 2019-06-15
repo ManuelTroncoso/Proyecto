@@ -12,7 +12,8 @@
     $consulta = $con->query("select * from codes where Id = '$code';");
     if($consulta->num_rows > 0){
         $consulta = $con->query("select * from teacherAccount where user = '$usuario';");
-        if($consulta->num_rows>0){
+        $consulta2 = $con->query("select * from studentAccount where user = '$usuario';");
+        if($consulta->num_rows>0 && $consulta2->num_rows>0){
             echo "UserError";
         }
         else{

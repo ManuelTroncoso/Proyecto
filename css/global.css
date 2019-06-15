@@ -7,13 +7,21 @@
 }
 :root {
     --primary-color: #007bff;
+    --bgc-color:rgba(0, 132, 255, 0.123);
 }
 
 .navbar,.row{
     max-width: 100%;
 }
+.container-fluid{
+    padding: 0%;
+}
 *{
     font-family: 'Montserrat', sans-serif;
+}
+/*Lista de elementos*/
+.student-data:nth-child(even), .box-tuit {
+    background-color: var(--bgc-color) !important;
 }
 
 /*Formularios*/
@@ -62,4 +70,54 @@
 #void{
     display:block;
     margin:auto;
+}
+
+@media all and (max-width: 768px) {
+
+    #iconPpal{
+        display: none;
+    }
+    #search{
+        width: 70%;
+        margin-right:15px;
+    }
+    .student-data-title{
+        display: none;
+    }
+    .void{
+        margin-top: 10px;
+        font-size: 1em;
+    }
+    
+    .close{
+        display: none;
+    }
+    .title{
+        font-size: 1.5em;
+    }
+
+    /*Tuit*/
+    #id-tuit{
+        margin-left:10% !important;
+        width: 80% !important;
+    }
+    .box-tuit{
+        margin-top:15px;
+    }
+
+    /*Chat*/
+    #contenedor{
+        width: 100% !important;
+        margin:0!important;
+    }
+    #caja-send{
+        margin-left:0% !important ;
+        width: 100% !important;
+    }#caja-send>.row{
+        margin-left:0% !important ;
+        /* width: 100% !important; */
+    }#caja-send>p{
+        padding-left:15px !important ;
+        /* width: 100% !important; */
+    }
 }

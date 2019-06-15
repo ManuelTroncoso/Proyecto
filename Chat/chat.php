@@ -5,6 +5,7 @@
 	$consulta = "SELECT * FROM chat WHERE sala = '$sala' ORDER BY id DESC ";
 	$ejecutar = $conexion->query($consulta); 
 	while($fila = $ejecutar->fetch_array()) : 
+		
 ?>
 	<div id="datos-chat">
 		<span style="color: #1C62C4;"><?php echo $fila['nombre']; ?></span>
